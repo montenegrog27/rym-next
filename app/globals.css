@@ -25,3 +25,10 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+@font-face {
+  font-family: "ruda";
+  src: url("../assets/Ruda/static/Ruda-Black.ttf");
+}
+.fonte {
+  font-family: "ruda";
+}
