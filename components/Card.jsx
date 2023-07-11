@@ -1,26 +1,28 @@
 "use client";
 import { useRouter } from "next/navigation";
 
-function Card({ characters }) {
+function Card({ characters, foundCharacter }) {
   const router = useRouter();
-  return (
-    <div className=" grid grid-cols-4 gap-2">
-      {characters.map((char) => (
-        <li
-          className="card lg:card-side p-2"
-          key={char.id}
-          onClick={() => {
-            router.push(`/details/${char.id}`);
-          }}
-        >
-          <div className=" card lg:card-side bg-base-100 shadow-xl  ">
+
+  if (foundCharacter) {
+    const { id, image, name, species, gender } = foundCharacter;
+
+    return (
+      <div className="grid grid-cols-4 gap-2">
+        <li className="card lg:card-side p-2">
+          <div
+            className="card lg:card-side bg-base-100 shadow-xl"
+            onClick={() => {
+              router.push(`/details/${id}`);
+            }}
+          >
             <figure>
-              <img src={char.image} alt={char.type} />
+              <img src={image} alt={species} />
             </figure>
             <div className="card-body">
-              <h2 className="card-title">{char.name}</h2>
-              <h2 className="card-title">{char.species}</h2>
-              <h2 className="card-title">{char.gender}</h2>
+              <h2 className="card-title">{name}</h2>
+              <h2 className="card-title">{species}</h2>
+              <h2 className="card-title">{gender}</h2>
               <div className="card-actions justify-end">
                 <button className="btn text-gray-100 text-xl bg-green-500">
                   Detalles
@@ -29,9 +31,12 @@ function Card({ characters }) {
             </div>
           </div>
         </li>
-      ))}
-    </div>
-  );
+      </div>
+    );
+  }
+
+  // Si no se encontró ningún personaje, puedes mostrar un mensaje o dejarlo en blanco
+  return null;
 }
 
 export default Card;
