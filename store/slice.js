@@ -6,10 +6,10 @@ export const Slice = createSlice({
     characters: [],
   },
   reducers: {
-    TraerPersonajes: (state, action) => {
-      state.characters = action.payload;
+    agregarPersonaje: (state, action) => {
+      state.characters.push(action.payload);
     },
   },
 });
 
-export const { TraerPersonajes } = Slice.actions;
+export const { agregarPersonaje } = Slice.actions;

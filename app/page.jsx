@@ -2,17 +2,17 @@
 import React, { useEffect } from "react";
 import Card from "@/components/Card";
 import SearchBar from "@/components/SearchBar";
-import { TraerPersonajes } from "@/store/slice";
+import { agregarPersonaje } from "@/store/slice";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const url = "https://rickandmortyapi.com/api/character";
 
 function Home() {
-  // let characs = useSelector((state) => state.valores.characters);
   const [foundCharacter, setFoundCharacter] = useState([]);
   const dispatch = useDispatch();
+  const characters = useSelector((state) => state.valores.characters);
 
   async function searchHandler(id) {
     try {
@@ -23,6 +23,7 @@ function Home() {
         const foundCharacterData = await response.json();
         if (foundCharacterData.name) {
           setFoundCharacter((prevState) => [...prevState, foundCharacterData]);
+          dispatch(agregarPersonaje(foundCharacterData));
         } else {
           window.alert("Personaje no encontrado");
         }
@@ -35,8 +36,8 @@ function Home() {
   }
 
   useEffect(() => {
-    dispatch(TraerPersonajes(foundCharacter));
-  }, [foundCharacter, dispatch]);
+    setFoundCharacter(characters);
+  }, [characters]);
 
   console.log();
   return (
@@ -48,28 +49,3 @@ function Home() {
 }
 
 export default Home;
-
-// const [foundCharacter, setFoundCharacter] = useState([]);
-
-// async function searchHandler(id) {
-//   try {
-//     const found = foundCharacter.find((char) => char.id === Number(id));
-
-//     if (!found) {
-//       const response = await fetch(`${url}/${id}`);
-//       const foundCharacterData = await response.json();
-//       if (foundCharacterData.name) {
-//         setFoundCharacter((oldChars) => [foundCharacterData, ...oldChars]);
-//       } else {
-//         window.alert("Personaje no encontradooo");
-//       }
-//     } else {
-//       window.alert("El personaje ya fue agregado");
-//     }
-//   } catch (error) {
-//     alert(error.message);
-//   }
-// }
-// useEffect(() => {
-//   foundCharacter;
-// }, []);
