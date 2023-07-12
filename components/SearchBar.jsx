@@ -1,39 +1,14 @@
 "use client";
-import Card from "./Card";
+
 import { useState } from "react";
 
-function SearchBar() {
-  const url = "https://rickandmortyapi.com/api/character";
-
-  const [characters, setCharacters] = useState([]);
-  const [id, setIde] = useState("");
-  const [foundCharacter, setFoundCharacter] = useState(null);
+function SearchBar(props) {
+  const { searchHandler } = props;
+  const [id, setId] = useState("");
 
   const handleChange = (event) => {
-    setIde(event.target.value);
+    setId(event.target.value);
   };
-
-  async function searchHandler(id) {
-    const found = characters.find((char) => char.id === Number(id));
-
-    try {
-      if (!found) {
-        const response = await fetch(`${url}/${id}`);
-        const foundCharacterData = await response.json();
-        if (foundCharacterData.name) {
-          setFoundCharacter(foundCharacterData);
-        } else {
-          setFoundCharacter(null);
-          window.alert("Personaje no encontrado");
-        }
-      } else {
-        setFoundCharacter(null);
-        window.alert("Personaje no encontrado");
-      }
-    } catch (error) {
-      alert(error.message);
-    }
-  }
 
   return (
     <div className=" flex p-2 bg-neutral-700 justify-end">
@@ -66,7 +41,6 @@ function SearchBar() {
               />
             </svg>
           </button>
-          <Card characters={characters} foundCharacter={foundCharacter} />
         </div>
       </div>
     </div>
@@ -74,3 +48,28 @@ function SearchBar() {
 }
 
 export default SearchBar;
+
+// const [id, setIde] = useState("");
+// const [foundCharacter, setFoundCharacter] = useState([]);
+
+// async function searchHandler(id) {
+//   const found = foundCharacter.find((char) => char.id === Number(id));
+
+//   try {
+//     if (!found) {
+//       const response = await fetch(`${url}/${id}`);
+//       const foundCharacterData = await response.json();
+//       if (foundCharacterData.name) {
+//         setFoundCharacter(foundCharacterData);
+//       } else {
+//         setFoundCharacter(null);
+//         window.alert("Personaje no encontrado");
+//       }
+//     } else {
+//       setFoundCharacter(null);
+//       window.alert("Personaje no encontrado");
+//     }
+//   } catch (error) {
+//     alert(error.message);
+//   }
+// }
